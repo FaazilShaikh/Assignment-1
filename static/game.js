@@ -39,6 +39,14 @@ document.addEventListener('keyup', function(event) {
   }
 });
 
+
+
+  document.getElementById('buttons').addEventListener('click',function(event){
+  if(event.target.id == "Rock" || event.target.id == "Paper" || event.target.id == "Scissors" ){
+    socket.emit('clicked',event.target.id)
+  }
+  });
+
 socket.emit('new player');
 setInterval(function() {
   socket.emit('movement', movement);
@@ -49,7 +57,7 @@ canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
 socket.on('state', function(players) {
-  console.log(players);
+ // console.log(players);
   context.clearRect(0, 0, 800, 600);
   context.fillStyle = 'green';
   for (var id in players) {

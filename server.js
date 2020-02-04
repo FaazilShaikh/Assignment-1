@@ -23,11 +23,12 @@ server.listen(5000, function() {
 var players = {};
 io.on('connection', function(socket) {
   socket.on('new player', function() {
-  
-   //console.log(socket)
+
     players[socket.id] = {
       x: 300,
-      y: 300
+      y: 300,
+      selection: ""
+
     };
  
   });
@@ -46,15 +47,14 @@ io.on('connection', function(socket) {
       player.y += 15;
     }
   });
-
+  socket.on('clicked',function(clicked){
+  console.log(clicked);
+  players[socket.id].selection = clicked;
+  console.log(players[socket.id]);
+  
+  });
   socket.on('disconnect', function(){
-    console.log(socket.id);
    delete players[socket.id];
-   // players[socket.id] = {
-     // x: 30000,
-      //y: 30000
-    //};
-
     });
     
 
