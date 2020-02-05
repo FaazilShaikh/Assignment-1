@@ -6,15 +6,3 @@ var socket = io();
   });
 
 socket.emit('new player');
-setInterval(function() {
-  socket.emit('movement', movement);
-}, 1000 / 60);
-
-var canvas = document.getElementById('canvas');
-canvas.width = 800;
-canvas.height = 600;
-var context = canvas.getContext('2d');
-socket.on('state', function(players) {
- // console.log(players);
-  context.clearRect(0, 0, 800, 600);
-});
