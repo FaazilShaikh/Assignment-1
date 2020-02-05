@@ -21,16 +21,17 @@ server.listen(5000, function() {
 });
 
 var players = {};
+var playercount =0;
 io.on('connection', function(socket) {
   socket.on('new player', function() {
-
+    playercount++;
     players[socket.id] = {
       x: 300,
       y: 300,
-      selection: ""
-
+      selection: "",
+      name: playercount
     };
- 
+    
   });
   socket.on('movement', function(data) {
     var player = players[socket.id] || {};
@@ -49,7 +50,9 @@ io.on('connection', function(socket) {
   });
   socket.on('clicked',function(clicked){
   console.log(clicked);
+  if((clicked == "Rock" || clicked == "Paper"|| clicked == "Scissors")){ //verify in case a tampered event is fired
   players[socket.id].selection = clicked;
+  }
   console.log(players[socket.id]);
   
   });
