@@ -26,28 +26,12 @@ io.on('connection', function(socket) {
   socket.on('new player', function() {
     playercount++;
     players[socket.id] = {
-      x: 300,
-      y: 300,
       selection: "",
       name: playercount
     };
     
   });
-  socket.on('movement', function(data) {
-    var player = players[socket.id] || {};
-    if (data.left) {
-      player.x -= 15;
-    }
-    if (data.up) {
-      player.y -= 15;
-    }
-    if (data.right) {
-      player.x += 15;
-    }
-    if (data.down) {
-      player.y += 15;
-    }
-  });
+
   socket.on('clicked',function(clicked){
   console.log(clicked);
   if((clicked == "Rock" || clicked == "Paper"|| clicked == "Scissors")){ //verify in case a tampered event is fired
