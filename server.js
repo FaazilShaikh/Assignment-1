@@ -6,7 +6,7 @@ var socketIO = require('socket.io');
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
-var calc = require('./calculateResults');
+//var calc = require('./calculateResults');
 
 app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
@@ -37,7 +37,7 @@ io.on('connection', function(socket) {
   console.log(clicked);
   if((clicked == "Rock" || clicked == "Paper"|| clicked == "Scissors") && players[socket.id]){ //verify in case a tampered event is fired, and check to see if the player exists
     players[socket.id].selection = clicked;
-    io.sockets.to(socket.id).emit("match","You have selected" + players[socket.id].selection);
+    io.sockets.to(socket.id).emit("match","You have selected " + players[socket.id].selection);
     if(selected == null){
       selected = socket.id;
     }
