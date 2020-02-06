@@ -1,6 +1,11 @@
-function calcResults(p1, p2) {
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var socketIO = require('socket.io');
+
+function calcResults(p1, p2, players) {
     //tie
-    if (  players[p1].selection == players[p2].selection) {
+    if ( players[p1].selection == players[p2].selection) {
         var output = document.getElementById('result');
         output.innerHTML = "Tie. Both players chose " + players[p1].selection;
     }
