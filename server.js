@@ -36,17 +36,17 @@ io.on('connection', function(socket) {
   socket.on('clicked',function(clicked){
   console.log(clicked);
   if((clicked == "Rock" || clicked == "Paper"|| clicked == "Scissors") && players[socket.id]){ //verify in case a tampered event is fired, and check to see if the player exists
-  players[socket.id].selection = clicked;
-  io.sockets.to(socket.id).emit("match","You have selected " + players[socket.id].selection);
-  if(selected == null){
-    selected = socket.id;
-  }
-  else
-  {
-    calcResults(socket.id,selected,players);
-    selected = null;
-    
-  }
+    players[socket.id].selection = clicked;
+    io.sockets.to(socket.id).emit("match","You have selected" + players[socket.id].selection);
+    if(selected == null){
+      selected = socket.id;
+    }
+    else
+    {
+      calcResults(socket.id,selected,players);
+      selected = null;
+      
+    }
   }
 
   console.log(players[socket.id]);
