@@ -6,3 +6,12 @@ var socket = io();
   });
 
 socket.emit('new player');
+
+socket.on('match', function(msg) {
+  document.getElementById("match").innerHTML = msg;
+  });
+  
+
+socket.on('res', function(msg) {
+document.getElementById("result").innerHTML = msg;
+});
