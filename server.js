@@ -56,28 +56,28 @@ io.on('connection', function(socket) {
    delete players[socket.id];
     });
     
-  
+    function calcResults(p1, p2, players) {
+      //tie
+      if ( players[p1].selection == players[p2].selection) {
+          socket.emit("res","Tie. Both players chose " + players[p1].selection);
+      }
+    
+      //player 1 wins
+      if ((players[p1].selection == 'Rock' && players[p2].selection == 'Scissors') || 
+          (players[p1].selection == 'Paper' && players[p2].selection == 'Rock') ||
+          (players[p1].selection == 'Scissors' && players[p2].selection == 'Paper')) {
+          socket.emit("res","Player #" + players[p1].name + " wins. Player #" + players[p1].name + " used " + players[p1].selection + " while, player #" + players[p2].name  + " used " + players[p2].selection + ".");
+      }
+    
+      //player 2 wins
+      if ((players[p2].selection == 'Rock' && players[p1].selection == 'Scissors') || 
+          (players[p2].selection == 'Paper' && players[p1].selection == 'Rock') ||
+          (players[p2].selection == 'Scissors' && players[p1].selection == 'Paper')) {
+          socket.emit("res","Player #" + players[p2].name + " wins. Player #" + players[p2].name  + " used " + players[p2].selection + " while, player #" + players[p1].name  + " used " + players[p1].selection + ".");
+      }
+    }
 
 
 });
 
-function calcResults(p1, p2, players) {
-  //tie
-  if ( players[p1].selection == players[p2].selection) {
-      socket.emit("Tie. Both players chose " + players[p1].selection);
-  }
 
-  //player 1 wins
-  if ((players[p1].selection == 'Rock' && players[p2].selection == 'Scissors') || 
-      (players[p1].selection == 'Paper' && players[p2].selection == 'Rock') ||
-      (players[p1].selection == 'Scissors' && players[p2].selection == 'Paper')) {
-      socket.emit("Player #" + p1 + " wins. Player #" + p1 + " used " + players[p1].selection + " while, player #" + p2 + " used " + players[p2].selection + ".");
-  }
-
-  //player 2 wins
-  if ((players[p2].selection == 'Rock' && players[p1].selection == 'Scissors') || 
-      (players[p2].selection == 'Paper' && players[p1].selection == 'Rock') ||
-      (players[p2].selection == 'Scissors' && players[p1].selection == 'Paper')) {
-      socket.emit(output.innerHTML = "Player #" + p2 + " wins. Player #" + p2 + " used " + players[p2].selection + " while, player #" + p1 + " used " + players[p1].selection + ".");
-  }
-}
