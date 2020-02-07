@@ -36,7 +36,7 @@ io.on('connection', function(socket) {
   console.log(clicked);
   if((clicked == "Rock" || clicked == "Paper"|| clicked == "Scissors") && players[socket.id]){ //verify in case a tampered event is fired, and check to see if the player exists
     players[socket.id].selection = clicked;
-    io.sockets.to(socket.id).emit("match","You have selected " + players[socket.id].selection);
+    io.sockets.to(socket.id).emit("match","Hello Player #" + players[socket.id].name+", You have selected " + players[socket.id].selection);
     if(selected == 0){
       selected = socket.id;
     }
