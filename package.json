@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/FaazilShaikh/Assignment-1.git"
   },
-  "author": "",
-  "license": "",
+  "author": "Faazil",
+  "license": "WTFPL",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/FaazilShaikh/Assignment-1/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/FaazilShaikh/Assignment-1#readme",
   "dependencies": {
     "express": "^4.17.1",
     "express.js": "^1.0.0",
