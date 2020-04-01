@@ -1,23 +1,24 @@
 {
-  "name": "how-to-make-a-multiplayer-game",
+  "name": "rummy-o-",
   "version": "1.0.0",
-  "description": "A tutorial for creating multiplayer browser games",
+  "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js"
+    "test": "node server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/omgimanerd/how-to-make-a-multiplayer-game.git"
+    "url": "git+https://github.com/FaazilShaikh/Rummy-O-.git"
   },
-  "author": "Alvin Lin (omgimanerd)",
-  "license": "WTFPL",
+  "author": "",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/omgimanerd/how-to-make-a-multiplayer-game/issues"
+    "url": "https://github.com/FaazilShaikh/Rummy-O-/issues"
   },
-  "homepage": "https://github.com/omgimanerd/how-to-make-a-multiplayer-game#readme",
+  "homepage": "https://github.com/FaazilShaikh/Rummy-O-#readme",
   "dependencies": {
-    "express": "^4.14.0",
-    "socket.io": "^1.7.2"
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
   }
 }
