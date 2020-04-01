@@ -1,5 +1,3 @@
-
-
 // Dependencies.
 var express = require('express');
 var http = require('http');
@@ -8,7 +6,6 @@ var socketIO = require('socket.io');
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
-const {DeckOfTiles} =  require('./DeckOfTiles.js');
 
 app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
@@ -22,56 +19,69 @@ server.listen(5000, function() {
   console.log('Starting server on port 5000');
 });
 
-
-//game
-var functions ={};
 var players = {};
+var selected=0;
 var playercount =0;
-var Deck = new DeckOfTiles();
-Deck.Shuffle();
-
-functions["new player"] = function(socket){
-  console.log("Added Player")
-  playercount++;
-  players[socket.id] = {
-    selection: "",
-    name: playercount,
-    hand:[]
-  };
-
-
-  players[socket.id].hand.push(Deck.DealTile());
-  
-
-}
-
-
-
 io.on('connection', function(socket) {
+  socket.on('new player', function() {
+    playercount++;
+    players[socket.id] = {
+      selection: "",
+      name: playercount
+    };
+  
+});
 
-  var onevent = socket.onevent;
-  socket.onevent = function (packet) { //this is for the event handler below
-      var args = packet.data || [];
-      onevent.call (this, packet);    
-      packet.data = ["Event"].concat(args);
-      onevent.call(this, packet);      
-  };
-
+  socket.on('clicked',function(clicked){
+  console.log(clicked);
+  if((clicked == "Rock" || clicked == "Paper"|| clicked == "Scissors") && players[socket.id]){ //verify in case a tampered event is fired, and check to see if the player exists
+    players[socket.id].selection = clicked;
+    io.sockets.to(socket.id).emit("match","Hello Player #" + players[socket.id].name+", You have selected " + players[socket.id].selection);
+    if(selected == 0){
+      selected = socket.id;
+    }
+    else
+    {
+      if(selected != socket.id){ //check to see if its the same player firing the clicked function
+      calcResults(socket.id,selected,players);
+      selected = 0;
+      }
+    }
+  }
 
   
-  socket.on("Event",function(event,...args){ //single event handler
-    args =[...args] // 
-  console.log(event + " " + args[0]);
-  if(functions[event]){
-  functions[event](socket,args);
-  }
   });
-
   socket.on('disconnect', function(){
    delete players[socket.id];
     });
-  });
-
-
     
-   
+    function calcResults(p1, p2, players) {
+      //tie
+      if ( players[p1].selection == players[p2].selection) {
+          io.sockets.to(p2).emit("res","Tie. Both players chose " + players[p1].selection);
+          io.sockets.to(p1).emit("res","Tie. Both players chose " + players[p1].selection);
+      }
+    
+      //player 1 wins
+      if ((players[p1].selection == 'Rock' && players[p2].selection == 'Scissors') || 
+          (players[p1].selection == 'Paper' && players[p2].selection == 'Rock') ||
+          (players[p1].selection == 'Scissors' && players[p2].selection == 'Paper')) {
+          var msg = "Player #" + players[p1].name + " wins. Player #" + players[p1].name + " used " + players[p1].selection + " while, player #" + players[p2].name  + " used " + players[p2].selection + "."
+          io.sockets.to(p2).emit("res",msg);
+          io.sockets.to(p1).emit("res",msg);
+      }
+    
+      //player 2 wins
+      if ((players[p2].selection == 'Rock' && players[p1].selection == 'Scissors') || 
+          (players[p2].selection == 'Paper' && players[p1].selection == 'Rock') ||
+          (players[p2].selection == 'Scissors' && players[p1].selection == 'Paper')) {
+          var msg = "Player #" + players[p2].name + " wins. Player #" + players[p2].name  + " used " + players[p2].selection + " while, player #" + players[p1].name  + " used " + players[p1].selection + "."
+          io.sockets.to(p2).emit("res",msg);
+          io.sockets.to(p1).emit("res",msg);
+        }
+    }
+
+
+});
+
+

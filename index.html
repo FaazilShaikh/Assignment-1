@@ -1,13 +1,23 @@
 <html>
   <head>
     <title>A Multiplayer Game</title>
+    <style>
+      canvas {
+        width: 800px;
+        height: 600px;
+        border: 5px solid black;
+      }
+    </style>
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <div id="msg"></div>
+    <div id ="match"></div>
+    <div id="result"></div>
     <br>
     <div id = "buttons">
-    <button id = "test" >test</button>
+    <button id = "Rock" >Rock</button>
+    <button id = "Paper">Paper</button>
+    <button id = "Scissors">Scissors</button>
   </div>
   </body>
   <script src="/static/game.js"></script>
